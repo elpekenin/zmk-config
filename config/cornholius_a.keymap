@@ -1,0 +1,119 @@
+/*
+ * Copyright (c) 2022 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+
+
+#define DEV     BT_SEL
+#define ES_MNS  SLASH      // -
+#define ES_GRV  LBKT       // `
+#define ES_PLS  RBKT       // +
+#define ES_ACT  QUOT       // ´
+#define ES_NTL  SEMI       // ñ
+#define ES_MRD  GRAVE      // º
+#define ES_QOT  MINUS      // '
+#define ES_EXC  EQUAL      // ¡
+
+#define ES_QOP  LS(ES_EXC) // ¿
+#define ES_QCL  LS(ES_MNS) // ?
+#define ES_COP  RA(ES_ACT) // {
+#define ES_CCL  RA(NUHS)   // }
+#define ES_SOP  RA(ES_GRV) // [
+#define ES_SCL  RA(ES_PLS) // ]
+#define ES_BLS  RA(ES_MRD) // \
+
+#define _DEF 0
+#define _NAV 1
+#define _SYM 2
+#define _UTL 3
+
+/ {
+    behaviors {
+        // mod morphs
+        M_BSP: bspc_or_del {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp BSPC>, <&kp DEL>;
+            mods = <(MOD_LSFT)>;
+        };
+
+        M_VOL: volup_or_voldn {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp C_VOL_UP>, <&kp C_VOL_DN>;
+            mods = <(MOD_LSFT)>;
+        };
+
+
+        // tap dances
+        T_Z: z_or_lt_or_gt {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp Z>, <&kp NUBS>, <&kp LS(NUBS)>;
+        };
+
+        T_ACT: act_or_ntl {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp ES_ACT>, <&kp ES_NTL>;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <_DEF _NAV>;
+            then-layer = <_UTL>;
+        };
+    };
+};
+
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+                &kp TAB      &kp Q        &kp W        &kp E        &kp R        &kp T              &kp Y        &kp U        &kp I        &kp O        &kp P        &M_BSP
+                &none        &kp A        &kp S        &kp D        &kp F        &kp G              &kp H        &kp J        &kp K        &kp L        &T_ACT       &kp ES_PLS
+                &kp LSHFT    &T_Z         &kp X        &kp C        &kp V        &kp B              &kp N        &kp M        &kp COMMA    &kp DOT      &kp ES_MNS   &kp ES_GRV
+                &kp LCTRL    &kp LGUI     &kp LGUI     &kp LALT     &mo _NAV     &kp SPACE          &kp ENTER    &mo _SYM     &kp RALT     &none        &none        &M_VOL
+            >;
+        };
+
+        nav_layer {
+            bindings = <
+                &kp ESC      &kp N1       &kp N2       &kp N3       &kp N4       &kp N5             &kp N6       &kp N7       &kp N8       &kp N9       &kp N0       &kp DEL
+                &trans       &none        &none        &none        &none        &none              &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT    &none        &trans
+                &trans       &none        &none        &none        &none        &none              &none        &none        &none        &none        &none        &trans
+                &trans       &trans       &trans       &trans       &trans       &trans             &trans       &trans       &trans       &trans       &trans       &trans
+            >;
+        };
+
+        symbol_layer {
+            bindings = <
+                &kp ES_BLS   &none        &none        &none        &none        &none              &none        &kp ES_QOP   &kp ES_QCL   &none        &kp ES_QOT   &trans
+                &trans       &none        &none        &none        &none        &none              &none        &kp ES_SOP   &kp ES_SCL   &none        &none        &trans
+                &trans       &none        &none        &none        &none        &none              &none        &kp ES_COP   &kp ES_CCL   &none        &none        &trans
+                &trans       &trans       &trans       &trans       &trans       &trans             &trans       &trans       &trans       &trans       &trans       &trans
+            >;
+        };
+
+        F_layer {
+            bindings = <
+                &kp F12     &kp F1        &kp F2       &kp F3       &kp F4       &kp F5             &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &kp F11
+                &bt BT_CLR  &bt DEV 0     &bt DEV 1    &bt DEV 2    &none        &sys_reset         &none        &none        &none        &none        &none        &trans
+                &trans      &none         &none        &none        &none        &bootloader        &none        &none        &none        &none        &none        &trans
+                &trans      &trans        &trans       &trans       &trans       &trans             &trans       &trans       &trans       &trans       &trans       &trans
+            >;
+        };
+    };
+};
