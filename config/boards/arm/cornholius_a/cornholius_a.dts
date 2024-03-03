@@ -59,7 +59,6 @@
 
 		extra-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH)>;
 		trigger = <&wakeup_key>;
-		wakeup-source;
 	};
 
 	soft_off_wakers {

@@ -54,14 +54,12 @@
         T_Z: z_or_lt_or_gt {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
             bindings = <&kp Z>, <&kp NUBS>, <&kp LS(NUBS)>;
         };
 
         T_ACT: act_or_ntl {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
             bindings = <&kp ES_ACT>, <&kp ES_NTL>;
         };
     };
