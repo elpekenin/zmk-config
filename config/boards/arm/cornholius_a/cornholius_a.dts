@@ -69,7 +69,7 @@
 		wakeup-sources = <&wakeup_source>;
 	};
 
-soft_off_direct_kscan: soft_off_direct_kscan {
+	soft_off_direct_kscan: soft_off_direct_kscan {
 		compatible = "zmk,kscan-gpio-direct";
 		status = "okay";
 
