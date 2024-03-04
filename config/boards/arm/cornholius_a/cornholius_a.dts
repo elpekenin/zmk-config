@@ -72,7 +72,6 @@
     wrapped_scan: soft_off_sideband_behaviors {
         compatible = "zmk,kscan-sideband-behaviors";
         kscan = <&kscan0>;
-        wakeup-source;
 
         soft_off {
             row = <4>;
@@ -84,7 +83,6 @@
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "col2row";
-        wakeup-source;
         row-gpios = <&gpio0 26 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio0  6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio0  8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,

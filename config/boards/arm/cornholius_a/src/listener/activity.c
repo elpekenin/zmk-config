@@ -35,10 +35,17 @@ static int activity_change_listener(const zmk_event_t *eh) {
     set_led(GREEN_LED, false);
     set_led(BLUE_LED, false);
 
-    if (evt->state == ZMK_ACTIVITY_IDLE) {
-        k_work_schedule(&sleep_work, K_NO_WAIT);
-    } else {
-        k_work_cancel_delayable(&sleep_work);
+    switch (evt->state) {
+        case ZMK_ACTIVITY_IDLE:
+            k_work_schedule(&sleep_work, K_NO_WAIT);
+            break;
+
+        case ZMK_ACTIVITY_SLEEP:
+            __fallthrough;
+
+        case ZMK_ACTIVITY_ACTIVE:
+            k_work_cancel_delayable(&sleep_work);
+            break;
     }
 
     return ZMK_EV_EVENT_BUBBLE;
