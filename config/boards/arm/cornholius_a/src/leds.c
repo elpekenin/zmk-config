@@ -3,14 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(peke_leds, CONFIG_ZMK_LOG_LEVEL);
+
 #include <zephyr/sys/__assert.h>
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 
 #include "leds.h"
 
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static bool leds_state[N_LEDS] = {false, false};
 static const struct gpio_dt_spec leds[N_LEDS] = {

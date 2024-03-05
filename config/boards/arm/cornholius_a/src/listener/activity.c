@@ -3,17 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(peke_activity, CONFIG_ZMK_LOG_LEVEL);
+
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 
 #include <zmk/event_manager.h>
 #include <zmk/events/activity_state_changed.h>
 
 #include "leds.h"
-
-
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 
 static void sleeping_callback(struct k_work *work) {

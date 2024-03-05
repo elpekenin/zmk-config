@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(peke_layer, CONFIG_ZMK_LOG_LEVEL);
+
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 
 #include <zmk/event_manager.h>
 #include <zmk/events/layer_state_changed.h>
@@ -13,7 +15,6 @@
 #include "leds.h"
 
 
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 
 static int layer_change_listener(const zmk_event_t *eh) {
