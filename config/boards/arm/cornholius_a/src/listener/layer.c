@@ -14,9 +14,6 @@ LOG_MODULE_REGISTER(peke_layer, CONFIG_ZMK_LOG_LEVEL);
 
 #include "leds.h"
 
-
-
-
 static int layer_change_listener(const zmk_event_t *eh) {
     struct zmk_layer_state_changed *evt = as_zmk_layer_state_changed(eh);
 

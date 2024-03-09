@@ -5,5 +5,6 @@ zephyr_library()
 zephyr_library_include_directories(${CMAKE_SOURCE_DIR}/include)
 zephyr_library_include_directories(include)
 
-file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
-zephyr_library_sources(${SRC})
+zephyr_library_sources(src/leds.c)
+zephyr_library_sources(src/listener/layer.c)
+zephyr_library_sources(src/listener/activity.c)
