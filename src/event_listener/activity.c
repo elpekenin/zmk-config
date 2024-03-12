@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+#error HELLO WORLD
+
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(peke_activity, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
@@ -12,7 +14,7 @@ LOG_MODULE_REGISTER(peke_activity, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/event_manager.h>
 #include <zmk/events/activity_state_changed.h>
 
-#include "leds.h"
+#include "elpekenin/leds.h"
 
 
 static void sleeping_callback(struct k_work *work) {

@@ -40,7 +40,6 @@
             status = "okay";
 
             #binding-cells = <0>;
-            // hold-time-ms = <3000>;
         };
     };
 

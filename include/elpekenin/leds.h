@@ -8,6 +8,8 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 
+// TODO: Find pins across dts, infer number of LEDs instead of hardcoding
+
 #define GREEN_LED 0
 #define BLUE_LED  1
 #define N_LEDS    2

@@ -4,13 +4,13 @@
  */
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(peke_leds, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zephyr/sys/__assert.h>
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 
-#include "leds.h"
+#include "elpekenin/leds.h"
 
 
 static bool leds_state[N_LEDS] = {false, false};

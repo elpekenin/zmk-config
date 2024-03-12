@@ -12,5 +12,4 @@
 #     shield: reviung41
 #
 ---
-include:
-  - board: cornholius_a
+board: [cornholius_a]

@@ -4,7 +4,7 @@
  */
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(peke_layer, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
@@ -12,7 +12,7 @@ LOG_MODULE_REGISTER(peke_layer, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/event_manager.h>
 #include <zmk/events/layer_state_changed.h>
 
-#include "leds.h"
+#include "elpekenin/leds.h"
 
 static int layer_change_listener(const zmk_event_t *eh) {
     struct zmk_layer_state_changed *evt = as_zmk_layer_state_changed(eh);

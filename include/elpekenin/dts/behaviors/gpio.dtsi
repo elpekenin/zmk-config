@@ -1,0 +1,14 @@
+/*
+ * Copyright (c) 2024 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+    behaviors {
+        /omit-if-no-ref/ gpio: gpio {
+            compatible = "zmk,behavior-gpio";
+            #binding-cells = <2>; /* pin_no, state */
+        };
+    };
+};
