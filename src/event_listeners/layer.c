@@ -4,7 +4,7 @@
  */
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(elpekenin, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
