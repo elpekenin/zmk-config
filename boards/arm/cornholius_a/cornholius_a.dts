@@ -72,7 +72,7 @@
         compatible = "zmk,kscan-sideband-behaviors";
         kscan = <&kscan0>;
 
-        soft_off {
+        soft_off_callback: soft_off_callback {
             row = <4>;
             column = <1>;
             bindings = <&soft_off>;
@@ -103,10 +103,10 @@
 
     gpios: gpios {
         compatible = "gpio-leds";
-        green {
+        green: green {
             gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
         };
-        blue {
+        blue: blue {
             gpios = <&gpio1 2 GPIO_ACTIVE_LOW>;
         };
     };

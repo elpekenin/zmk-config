@@ -1,1 +1,1 @@
-#include "elpekenin/dts/behaviors/gpio.dtsi"
+#include "elpekenin/__dts/behaviors/gpio.dtsi"

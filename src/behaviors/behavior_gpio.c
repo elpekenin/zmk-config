@@ -27,6 +27,9 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 #include <drivers/behavior.h>
 #include <zmk/behavior.h>
 
+#include "elpekenin/__dts/behaviors/gpio.h"
+
+
 #define DT_DRV_COMPAT zmk_behavior_gpio
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
@@ -67,9 +70,8 @@ static int on_keymap_binding_pressed(
     struct zmk_behavior_binding_event event
 ) {
     if (
-        // only bool values
-        binding->param2 != 0
-        && binding->param2 != 1
+        binding->param2 < 0
+        && binding->param2 > GPIO_TOG
     ) {
         LOG_ERR("Invalid state (%d) for gpio.", binding->param2);
         return -ENOTSUP;
@@ -84,10 +86,11 @@ static int on_keymap_binding_pressed(
         return -ENOTSUP;
     }
 
-    LOG_DBG("Setting gpio (%d) to state (%d)", binding->param1, binding->param2);
-    gpio_pin_set_dt(&gpios[binding->param1], binding->param2);
+    if (binding->param2 == GPIO_TOG) {
+        return gpio_pin_toggle_dt(&gpios[binding->param1]);
+    }
 
-    return 0;
+    return gpio_pin_set_dt(&gpios[binding->param1], binding->param2);
 }
 
 static int on_keymap_binding_released(

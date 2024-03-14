@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include "elpekenin/__dts/behaviors/gpio.h"
+
 / {
     behaviors {
         /omit-if-no-ref/ gpio: gpio {
