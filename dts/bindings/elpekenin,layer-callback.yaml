@@ -1,0 +1,18 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Tap (press and release) behavior(s) when a layer is (de)activated
+
+compatible: "elpekenin,layer-callback"
+
+child-binding:
+  description: "A layer's config"
+
+  properties:
+    layer:
+      type: int
+      required: true
+    on-bindings:
+      type: phandle-array
+    off-bindings:
+      type: phandle-array

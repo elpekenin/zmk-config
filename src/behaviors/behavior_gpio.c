@@ -18,6 +18,8 @@
     };
 */
 
+#define DT_DRV_COMPAT elpekenin_behavior_gpio
+
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 
@@ -28,9 +30,6 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/behavior.h>
 
 #include "elpekenin/__dts/behaviors/gpio.h"
-
-
-#define DT_DRV_COMPAT zmk_behavior_gpio
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
 

@@ -9,7 +9,7 @@
 / {
     behaviors {
         /omit-if-no-ref/ gpio: gpio {
-            compatible = "zmk,behavior-gpio";
+            compatible = "elpekenin,behavior-gpio";
             #binding-cells = <2>; /* pin_no, state */
         };
     };

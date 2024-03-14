@@ -1,8 +1,8 @@
 # Copyright (c) 2024 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-description: GPIO Behavior
+description: Behavior to control GPIOs (LEDs)
 
-compatible: "zmk,behavior-gpio"
+compatible: "elpekenin,behavior-gpio"
 
 include: two_param.yaml
