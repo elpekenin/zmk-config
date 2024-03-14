@@ -12,7 +12,9 @@ child-binding:
     layer:
       type: int
       required: true
-    on-bindings:
-      type: phandle-array
-    off-bindings:
-      type: phandle-array
+
+  child-binding:
+    properties:
+      bindings:
+        type: phandle-array
+        description: "On/off bindings"

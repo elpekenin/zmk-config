@@ -12,6 +12,8 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 #include <zephyr/kernel.h>
 
 #include <zmk/keymap.h>
+#include <zmk/behavior_queue.h>
+
 #include <zmk/event_manager.h>
 #include <zmk/events/layer_state_changed.h>
 
@@ -19,26 +21,34 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
-// Lets gather all the instances' info
+// TODO: Make array flexible
+//       Probably needs iterating all the nodes and creating standalone ...
+//       ... structs and then reference (&) them
+struct action {
+    uint8_t count;
+    struct zmk_behavior_binding bindings[30];
+};
+
 struct layer_cb_cfg {
     int8_t layer;
-    uint8_t on_count;
-    uint8_t off_count;
-    struct zmk_behavior_binding bindings[]; // everything together, ugh
+    struct action on;
+    struct action off;
 };
 
 #define EXTRACT(n) \
+    {LISTIFY(DT_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n)}
+
+#define EXTRACT_BINDINGS(n) \
     { \
-        LISTIFY(DT_PROP_LEN(n, on_bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n), \
-        LISTIFY(DT_PROP_LEN(n, off_bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n) \
+        .count = DT_PROP_LEN(n, bindings), \
+        .bindings = EXTRACT(n) \
     }
 
 #define LAYER_CB_INST_AND_COMMA(n) \
-    (static struct layer_cb_cfg) { \
+    { \
         .layer = DT_PROP(n, layer), \
-        .on_count = DT_PROP_LEN(n, on_bindings), \
-        .off_count = DT_PROP_LEN(n, off_bindings), \
-        .bindings = EXTRACT(n), \
+        .on = EXTRACT_BINDINGS(DT_CHILD(n, on)), \
+        .off = EXTRACT_BINDINGS(DT_CHILD(n, off)) \
     },
 
 static struct layer_cb_cfg callbacks[] = {
@@ -59,22 +69,19 @@ static int layer_change_listener(const zmk_event_t *eh) {
         callback < &callbacks[N_CBS];
         ++callback
     ) {
-        if (evt->layer != callback->layer) {
-            continue;
-        }
-
         if (
-            (evt->state && !callback->on_count)
-            || (!evt->state && callback->off_count)
+            evt->layer != callback->layer
+            || (evt->state && !callback->on.count)
+            || (!evt->state && !callback->off.count)
         ) {
             continue;
         }
 
-        uint8_t offset = (evt->state ? 0 : callback->on_count);
-        uint8_t count = (evt->state ? callback->on_count : callback->off_count);
+        LOG_DBG("Running for layer %d: %d", evt->layer, evt->state);
+        struct action action = (evt->state ? callback->on : callback->off);
         for (
-            const struct zmk_behavior_binding *binding = &callback->bindings[offset];
-            binding < &callback->bindings[offset + count];
+            const struct zmk_behavior_binding *binding = action.bindings;
+            binding < &action.bindings[action.count];
             binding++
         ) {
             zmk_behavior_queue_add(0, *binding, true, 0);  // press

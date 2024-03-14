@@ -4,20 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/*
-    Looks for and works over a node like
-    -----
-    gpios: gpios {
-        compatible = "gpio-leds";
-        green {
-            gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
-        };
-        blue {
-            gpios = <&gpio1 2 GPIO_ACTIVE_LOW>;
-        };
-    };
-*/
-
 #define DT_DRV_COMPAT elpekenin_behavior_gpio
 
 #include <zephyr/device.h>
