@@ -19,39 +19,37 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include <drivers/behavior.h>
 
-// TODO: Do not hardcode on/off and/or make the yaml check for those names
+/* Further events could be implemented if we stored some state, eg 
+ *   BECOME_HIGHEST_LAYER
+ *   GET_SUPERSEDED
+ */
+enum layer_event {
+    ON_ACTIVATION,
+    ON_DEACTIVATION,
+};
 
 struct layer_cb_cfg {
     int8_t layer;
-    size_t on_count;
-    size_t off_count;
-    struct zmk_behavior_binding bindings[];
+    enum layer_event event;
+    size_t count;
+    struct zmk_behavior_binding behaviors[];
 };
 
-#define ON_NODE(n) DT_CHILD(n, on)
-#define OFF_NODE(n) DT_CHILD(n, off)
-
-#define _EXTRACT_BINDINGS(n) \
-    LISTIFY(DT_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n)
-
 #define EXTRACT_BINDINGS(n) \
-    { \
-        _EXTRACT_BINDINGS(ON_NODE(n)), \
-        _EXTRACT_BINDINGS(OFF_NODE(n)) \
-    }
+    {LISTIFY(DT_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n)}
 
 #define LAYER_CB_STRUCT(n) \
     static struct layer_cb_cfg callback_##n = { \
         .layer = DT_PROP(n, layer), \
-        .on_count = DT_PROP_LEN(ON_NODE(n), bindings), \
-        .off_count = DT_PROP_LEN(OFF_NODE(n), bindings), \
-        .bindings = EXTRACT_BINDINGS(n) \
+        .count = DT_PROP_LEN(n, bindings), \
+        .event = DT_ENUM_IDX(n, event),\
+        .behaviors = EXTRACT_BINDINGS(n) \
     };
 
 DT_INST_FOREACH_CHILD(0, LAYER_CB_STRUCT)
 
 #define LAYER_CB_STRUCT_REF_AND_COMMA(n) \
-    &callback_##n
+    &callback_##n,
 
 static struct layer_cb_cfg *callbacks[] = {
     DT_INST_FOREACH_CHILD(0, LAYER_CB_STRUCT_REF_AND_COMMA)
@@ -71,19 +69,26 @@ static int layer_change_listener(const zmk_event_t *eh) {
 
         if (
             evt->layer != callback->layer
-            || (evt->state && !callback->on_count)
-            || (!evt->state && !callback->off_count)
+            || (evt->state && callback->event == ON_DEACTIVATION)
+            || (!evt->state && callback->event == ON_ACTIVATION)
         ) {
             continue;
         }
 
-        size_t offset = (evt->state ? 0 : callback->on_count);
-        size_t count  = (evt->state ? callback->on_count : callback->off_count);
-        for (size_t i = offset; i < (offset + count); ++i) {
-            const struct zmk_behavior_binding binding = callback->bindings[i];
+        for (size_t i = 0; i < callback->count; ++i) {
+            /* TODO: Is it safe/should I pass a reference to the
+             *       actual behavior, instead of making a copy 
+             *       to be passed to the func?
+             */
+            struct zmk_behavior_binding behavior = callback->behaviors[i];
 
-            zmk_behavior_queue_add(0, binding, true, 0);  // press
-            zmk_behavior_queue_add(0, binding, false, 0); // release
+            struct zmk_behavior_binding_event event = {
+                .position = 0,
+                .timestamp = k_uptime_get(),
+            };
+
+            behavior_keymap_binding_pressed(&behavior, event);
+            behavior_keymap_binding_released(&behavior, event);
         }
     }
 
