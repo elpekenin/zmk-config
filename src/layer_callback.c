@@ -12,12 +12,26 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 #include <zephyr/kernel.h>
 
 #include <zmk/keymap.h>
-#include <zmk/behavior_queue.h>
+#include <zmk/behavior.h>
 
 #include <zmk/event_manager.h>
 #include <zmk/events/layer_state_changed.h>
 
 #include <drivers/behavior.h>
+
+/* Hack NOT to edit ZMK internals */
+#include <zmk/virtual_key_position.h>
+
+#if DT_HAS_COMPAT_STATUS_OKAY(zmk_combos)
+#define ADD_ONE() + 1
+#define ZMK_COMBOS_LEN (0 DT_FOREACH_CHILD(DT_INST(0, zmk_combos), ADD_ONE))
+#else
+#define ZMK_COMBOS_LEN 0
+#endif
+
+#define ZMK_VIRTUAL_KEY_POSITION_LAYER_CB(index) (ZMK_KEYMAP_LEN + ZMK_KEYMAP_SENSORS_LEN + ZMK_COMBOS_LEN + (index))
+/* ------------------------------ */
+
 
 /* Further events could be implemented if we stored some state, eg 
  *   BECOME_HIGHEST_LAYER
@@ -31,6 +45,7 @@ enum layer_event {
 struct layer_cb_cfg {
     int8_t layer;
     enum layer_event event;
+    int32_t virtual_key_position;
     size_t count;
     struct zmk_behavior_binding behaviors[];
 };
@@ -41,6 +56,7 @@ struct layer_cb_cfg {
 #define LAYER_CB_STRUCT(n) \
     static struct layer_cb_cfg callback_##n = { \
         .layer = DT_PROP(n, layer), \
+        .virtual_key_position = ZMK_VIRTUAL_KEY_POSITION_LAYER_CB(__COUNTER__), \
         .count = DT_PROP_LEN(n, bindings), \
         .event = DT_ENUM_IDX(n, event),\
         .behaviors = EXTRACT_BINDINGS(n) \
@@ -83,7 +99,7 @@ static int layer_change_listener(const zmk_event_t *eh) {
             struct zmk_behavior_binding behavior = callback->behaviors[i];
 
             struct zmk_behavior_binding_event event = {
-                .position = 0,
+                .position = callback->virtual_key_position,
                 .timestamp = k_uptime_get(),
             };
 
