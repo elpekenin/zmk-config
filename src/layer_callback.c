@@ -21,7 +21,6 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 // TODO: Do not hardcode on/off and/or make the yaml check for those names
 
-#if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
 struct layer_cb_cfg {
     int8_t layer;
     size_t on_count;
@@ -93,5 +92,3 @@ static int layer_change_listener(const zmk_event_t *eh) {
 
 ZMK_LISTENER(layer_callback, layer_change_listener);
 ZMK_SUBSCRIPTION(layer_callback, zmk_layer_state_changed);
-
-#endif // DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)

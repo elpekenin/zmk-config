@@ -57,9 +57,9 @@
         };
     };
 
-    utils_layer {
+    layer_callbacks {
         compatible = "elpekenin,layer-callback";
-        led_indicator {
+        utils_indicator {
             layer = <_UTL>;
             on {
                 bindings = <&gpio 0 GPIO_ON>;

@@ -10,7 +10,7 @@ zephyr_library_include_directories(${CMAKE_SOURCE_DIR}/include)
 zephyr_library_sources(src/elpekenin.c)
 
 # behaviors
-zephyr_library_sources(src/behaviors/behavior_gpio.c)
+zephyr_library_sources_ifdef(CONFIG_ELPEKENIN_BEHAVIOR_GPIO src/behaviors/behavior_gpio.c)
 
-# bindings
-zephyr_library_sources(src/layer_callback.c)
+# features
+zephyr_library_sources_ifdef(CONFIG_ELPEKENIN_LAYER_CALLBACK src/layer_callback.c)

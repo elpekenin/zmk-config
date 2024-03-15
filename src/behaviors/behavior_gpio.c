@@ -17,8 +17,6 @@ LOG_MODULE_DECLARE(elpekenin, CONFIG_ZMK_LOG_LEVEL);
 
 #include "elpekenin/__dts/behaviors/gpio.h"
 
-#if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
-
 #define GET_GPIO_SPEC_AND_COMMA(node_id) \
     GPIO_DT_SPEC_GET(node_id, gpios),
 
@@ -100,5 +98,3 @@ BEHAVIOR_DT_INST_DEFINE(
     CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,
     &behavior_gpio_driver_api
 );
-
-#endif /* DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT) */
