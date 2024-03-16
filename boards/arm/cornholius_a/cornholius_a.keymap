@@ -57,6 +57,14 @@
         };
     };
 
+    macros {
+        led_sleep: indicator_and_soft_off {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
+        };
+    };
+
     layer_callbacks {
         compatible = "elpekenin,layer-callback";
         utils_on {
@@ -72,6 +80,15 @@
     };
 };
 
+/* logic inverted to make stay ON during use, OFF while sleeping */
+&blue {
+    gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
+};
+
+/* make soft-off toggle GPIO used for LED sleep state */
+&soft_off_callback {
+    bindings = <&led_sleep>;
+};
 
 / {
     keymap {
