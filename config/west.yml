@@ -6,10 +6,16 @@ manifest:
       url-base: https://github.com/ebastler
     - name: petejohanson
       url-base: https://github.com/petejohanson
+    - name: userspace
+      url-base: https://github.com/elpekenin/zmk-userspace
   projects:
     - name: zmk
       remote: petejohanson
       revision: features/soft-off-take-3
       import: app/west.yml
+    - name: elpekenin
+      remote: userspace
+      revision: main
+      import: true
   self:
     path: config
