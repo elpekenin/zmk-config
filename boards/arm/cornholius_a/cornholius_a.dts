@@ -101,7 +101,7 @@
                     <&gpio0 30 GPIO_ACTIVE_HIGH>;
     };
 
-    gpios: gpios {
+    gpios {
         compatible = "gpio-leds";
         green: green {
             gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
