@@ -12,6 +12,6 @@
 };
 
 /* make soft-off toggle GPIO used for LED sleep state */
-&soft_off_callback {
-    bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
-};
+// &soft_off_callback {
+//     bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
+// };
