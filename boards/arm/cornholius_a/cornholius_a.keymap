@@ -92,6 +92,16 @@
             bindings = <&gpio 0 GPIO_OFF>;
         };
     };
+
+    combos {
+        compatible = "zmk,combos";
+
+        CTL_Z: ctrl_z_hack {
+            timeout-ms = <50>;
+            key-positions = <25 36>;
+            bindings = <&kp LC(Z)>
+        };
+    };
 };
 
 /* logic inverted to make stay ON during use, OFF while sleeping */
