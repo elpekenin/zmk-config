@@ -96,7 +96,7 @@
     combos {
         compatible = "zmk,combos";
 
-        CTL_Z: ctrl_z_hack {
+        ctrl_z {
             timeout-ms = <50>;
             key-positions = <25 36>;
             bindings = <&kp LC(Z)>;
