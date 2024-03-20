@@ -99,7 +99,7 @@
         CTL_Z: ctrl_z_hack {
             timeout-ms = <50>;
             key-positions = <25 36>;
-            bindings = <&kp LC(Z)>
+            bindings = <&kp LC(Z)>;
         };
     };
 };
