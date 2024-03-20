@@ -18,8 +18,7 @@
 #define _UTL 3
 
 / {
-    behaviors {
-        // mod morphs
+    mod_morphs {
         M_BSP: bspc_or_del {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -33,9 +32,26 @@
             bindings = <&kp C_VOL_UP>, <&kp C_VOL_DN>;
             mods = <(MOD_LSFT)>;
         };
+    };
 
+    macros {
+        led_sleep: indicator_and_soft_off {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
+        };
 
-        // tap dances
+        __SPC: space_times_4 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp SPC>,
+                       <&kp SPC>,
+                       <&kp SPC>,
+                       <&kp SPC>;
+        };
+    };
+
+    tap_dances {
         T_Z: z_lt_gt {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -47,6 +63,12 @@
             #binding-cells = <0>;
             bindings = <&kp ES_ACUTE>, <&kp ES_N_TILDE>;
         };
+
+        T_SPC: space_indent {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&kp SPC>, <&__SPC>;
+        };
     };
 
     conditional_layers {
@@ -54,14 +76,6 @@
         tri_layer {
             if-layers = <_NAV _SYM>;
             then-layer = <_UTL>;
-        };
-    };
-
-    macros {
-        led_sleep: indicator_and_soft_off {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
         };
     };
 
@@ -99,7 +113,7 @@
                 &kp TAB       &kp Q         &kp W         &kp E         &kp R         &kp T         /**/     &kp Y         &kp U         &kp I         &kp O         &kp P         &M_BSP
                 &none         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
                 &kp LSHFT     &T_Z          &kp X         &kp C         &kp V         &kp B         /**/     &kp N         &kp M         &kp COMMA     &kp DOT       &kp ES_MINUS  &kp ES_GRAVE
-                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &kp SPACE     /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
+                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &T_SPC        /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
             >;
         };
 
