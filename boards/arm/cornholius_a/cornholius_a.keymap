@@ -7,15 +7,16 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
-
-#include "elpekenin/behaviors.dtsi"
+#include <dt-bindings/zmk/outputs.h>
 
 #include "keys_es.h"
+#include "elpekenin/behaviors.dtsi"
 
-#define _DEF 0
-#define _NAV 1
-#define _SYM 2
-#define _UTL 3
+#define _QWE 0
+#define _DVO 1
+#define _NAV 2
+#define _SYM 3
+#define _UTL 4
 
 / {
     mod_morphs {
@@ -92,16 +93,6 @@
             bindings = <&gpio 0 GPIO_OFF>;
         };
     };
-
-    combos {
-        compatible = "zmk,combos";
-
-        ctrl_z {
-            timeout-ms = <50>;
-            key-positions = <25 36>;
-            bindings = <&kp LC(Z)>;
-        };
-    };
 };
 
 /* logic inverted to make stay ON during use, OFF while sleeping */
@@ -118,11 +109,20 @@
     keymap {
         compatible = "zmk,keymap";
 
-        default {
+        qwerty {
             bindings = <
                 &kp TAB       &kp Q         &kp W         &kp E         &kp R         &kp T         /**/     &kp Y         &kp U         &kp I         &kp O         &kp P         &M_BSP
                 &none         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
                 &kp LSHFT     &T_Z          &kp X         &kp C         &kp V         &kp B         /**/     &kp N         &kp M         &kp COMMA     &kp DOT       &kp ES_MINUS  &kp ES_GRAVE
+                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &T_SPC        /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
+            >;
+        };
+
+        dvorak {
+            bindings = <
+                &kp TAB       &none         &none         &none         &kp P         &kp Y         /**/     &kp F         &kp G         &kp C         &kp R         &kp L         &M_BSP
+                &none         &kp A         &kp O         &kp E         &kp U         &kp I         /**/     &kp D         &kp H         &kp T         &kp N         &kp S         &none
+                &kp LSHFT     &none         &kp Q         &kp J         &kp K         &kp X         /**/     &kp B         &kp M         &kp W         &kp V         &kp Z         &none
                 &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &T_SPC        /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
             >;
         };
@@ -148,9 +148,9 @@
         utils {
             bindings = <
                 &kp F12       &kp F1        &kp F2        &kp F3        &kp F4        &kp F5        /**/     &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &kp F11
-                &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df 3         &none         &none         &none         &none         &trans
-                &trans        &none         &none         &none         &none         &bootloader   /**/     &df 0         &none         &none         &none         &none         &trans
-                &trans        &trans        &trans        &trans        &trans        &trans        /**/     &trans        &trans        &trans        &trans        &trans        &trans
+                &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df _DVO      &none         &none         &none         &none         &trans
+                &trans        &none         &none         &none         &none         &bootloader   /**/     &df _QWE      &none         &none         &none         &none         &trans
+                &trans        &trans        &trans        &trans        &trans        &trans        /**/     &out OUT_TOG  &trans        &trans        &trans        &trans        &trans
             >;
         };
     };
