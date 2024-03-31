@@ -1,4 +1,1 @@
-build:
-  settings:
-    board_root: .
-  
+name: zmk-config
