@@ -12,11 +12,14 @@
 #include "keys_es.h"
 #include "elpekenin/behaviors.dtsi"
 
-#define _QWE 0
-#define _DVO 1
-#define _NAV 2
-#define _SYM 3
-#define _UTL 4
+#define QWE 0
+#define DVO 1
+#define NAV 2
+#define SYM 3
+#define UTL 4
+
+#define GREEN 0
+#define BLUE  1
 
 / {
     mod_morphs {
@@ -36,12 +39,6 @@
     };
 
     macros {
-        led_sleep: indicator_and_soft_off {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&gpio 1 GPIO_TOG>, <&soft_off>;
-        };
-
         __SPC: space_times_4 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -75,34 +72,29 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
-            if-layers = <_NAV _SYM>;
-            then-layer = <_UTL>;
+            if-layers = <NAV SYM>;
+            then-layer = <UTL>;
         };
     };
 
     layer_callbacks {
         compatible = "elpekenin,layer-callback";
         utils_on {
-            layer = <_UTL>;
+            layer = <UTL>;
             event = "on-activation";
-            bindings = <&gpio 0 GPIO_ON>;
+            bindings = <&gpio GREEN GPIO_ON>;
         };
         utils_off {
-            layer = <_UTL>;
+            layer = <UTL>;
             event = "on-deactivation";
-            bindings = <&gpio 0 GPIO_OFF>;
+            bindings = <&gpio GREEN GPIO_OFF>;
         };
     };
 };
 
-/* logic inverted to make stay ON during use, OFF while sleeping */
-&blue {
-    gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
-};
-
-/* make soft-off toggle GPIO used for LED sleep state */
-&soft_off_callback {
-    bindings = <&led_sleep>;
+// patch to use PR code while still "importing" userspace
+&df {
+    compatible = "zmk,behavior-default-layer";
 };
 
 / {
@@ -114,7 +106,7 @@
                 &kp TAB       &kp Q         &kp W         &kp E         &kp R         &kp T         /**/     &kp Y         &kp U         &kp I         &kp O         &kp P         &M_BSP
                 &none         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
                 &kp LSHFT     &T_Z          &kp X         &kp C         &kp V         &kp B         /**/     &kp N         &kp M         &kp COMMA     &kp DOT       &kp ES_MINUS  &kp ES_GRAVE
-                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &T_SPC        /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
+                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo NAV       &T_SPC        /**/     &kp ENTER     &mo SYM       &kp RALT      &none         &none         &M_VOL
             >;
         };
 
@@ -123,7 +115,7 @@
                 &kp TAB       &none         &none         &none         &kp P         &kp Y         /**/     &kp F         &kp G         &kp C         &kp R         &kp L         &M_BSP
                 &none         &kp A         &kp O         &kp E         &kp U         &kp I         /**/     &kp D         &kp H         &kp T         &kp N         &kp S         &none
                 &kp LSHFT     &none         &kp Q         &kp J         &kp K         &kp X         /**/     &kp B         &kp M         &kp W         &kp V         &kp Z         &none
-                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo _NAV      &T_SPC        /**/     &kp ENTER     &mo _SYM      &kp RALT      &none         &none         &M_VOL
+                &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo NAV       &T_SPC        /**/     &kp ENTER     &mo SYM       &kp RALT      &none         &none         &M_VOL
             >;
         };
 
@@ -148,8 +140,8 @@
         utils {
             bindings = <
                 &kp F12       &kp F1        &kp F2        &kp F3        &kp F4        &kp F5        /**/     &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &kp F11
-                &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df _DVO      &none         &none         &none         &none         &trans
-                &trans        &none         &none         &none         &none         &bootloader   /**/     &df _QWE      &none         &none         &none         &none         &trans
+                &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df DVO       &none         &none         &none         &none         &trans
+                &trans        &none         &none         &none         &none         &bootloader   /**/     &df QWE       &none         &none         &none         &none         &trans
                 &trans        &trans        &trans        &trans        &trans        &trans        /**/     &out OUT_TOG  &trans        &trans        &trans        &trans        &trans
             >;
         };
