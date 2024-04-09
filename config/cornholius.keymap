@@ -142,7 +142,7 @@
                 &kp F12       &kp F1        &kp F2        &kp F3        &kp F4        &kp F5        /**/     &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &kp F11
                 &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df DVO       &none         &none         &none         &none         &trans
                 &trans        &none         &none         &none         &none         &bootloader   /**/     &df QWE       &none         &none         &none         &none         &trans
-                &trans        &trans        &trans        &trans        &trans        &trans        /**/     &out OUT_TOG  &trans        &trans        &trans        &trans        &trans
+                &trans        &trans        &trans        &trans        &trans        &version      /**/     &out OUT_TOG  &trans        &trans        &trans        &trans        &trans
             >;
         };
     };

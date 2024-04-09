@@ -11,7 +11,7 @@ manifest:
   projects:
     - name: zmk
       remote: elpekenin
-      revision: feature/default-layer-setter
+      revision: feature/version
       import: app/west.yml
     - name: zmk-userspace
       remote: elpekenin
