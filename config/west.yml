@@ -10,8 +10,8 @@ manifest:
       url-base: https://github.com/elpekenin
   projects:
     - name: zmk
-      remote: elpekenin
-      revision: feature/version
+      remote: zmkfirmware
+      revision: main
       import: app/west.yml
     - name: zmk-userspace
       remote: elpekenin
