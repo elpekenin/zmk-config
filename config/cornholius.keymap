@@ -118,6 +118,8 @@
         compatible = "zmk,keymap";
 
         qwerty {
+            display-name = "QWERTY";
+
             bindings = <
                 &kp TAB       &kp Q         &kp W         &kp E         &kp R         &kp T         /**/     &kp Y         &kp U         &kp I         &kp O         &kp P         &M_BSP
                 &none         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
@@ -127,6 +129,8 @@
         };
 
         dvorak {
+            display-name = "DVORAK";
+
             bindings = <
                 &kp TAB       &none         &none         &none         &kp P         &kp Y         /**/     &kp F         &kp G         &kp C         &kp R         &kp L         &M_BSP
                 &none         &kp A         &kp O         &kp E         &kp U         &kp I         /**/     &kp D         &kp H         &kp T         &kp N         &kp S         &none
@@ -136,6 +140,8 @@
         };
 
         navigation {
+            display-name = "Navigation";
+
             bindings = <
                 &kp ESC       &kp N1        &kp N2        &kp N3        &kp N4        &kp N5        /**/     &kp N6        &kp N7        &kp N8        &kp N9        &kp N0       &trans
                 &trans        &none         &none         &none         &none         &none         /**/     &kp LEFT      &kp DOWN      &kp UP        &kp RIGHT     &none        &trans
@@ -145,6 +151,8 @@
         };
 
         symbols {
+            display-name = "Symbols";
+
             bindings = <
                 &kp ES_BSLH   &none         &none         &none         &none         &none         /**/     &none         &kp ES_IQMARK &kp ES_QMARK  &none         &kp ES_SQT    &trans
                 &trans        &none         &none         &none         &none         &none         /**/     &none         &kp ES_LBKT   &kp ES_RBKT   &none         &none         &trans
@@ -154,6 +162,8 @@
         };
 
         utils {
+            display-name = "Utilities";
+
             bindings = <
                 &kp F12       &kp F1        &kp F2        &kp F3        &kp F4        &kp F5        /**/     &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &kp F11
                 &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &none         &sys_reset    /**/     &df DVO       &none         &none         &none         &none         &trans

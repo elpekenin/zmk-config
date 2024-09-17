@@ -12,4 +12,6 @@
 #     shield: reviung41
 #
 ---
-board: [cornholius]
+include:
+  - board: [cornholius]
+    snippet: studio-rpc-usb-uart
