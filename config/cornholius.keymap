@@ -18,9 +18,6 @@
 #define SYM 3
 #define UTL 4
 
-#define GREEN 0
-#define BLUE  1
-
 / {
     mod_morphs {
         M_BSP: bspc_or_del {
@@ -105,10 +102,12 @@
     };
 };
 
-// patch to use PR code while still "importing" userspace
+/**
+ * patch to use PR code while still "importing" userspace
 &df {
     compatible = "zmk,behavior-default-layer";
 };
+ */
 
 &soft_off_callback {
     bindings = <&led_soft_off>;
