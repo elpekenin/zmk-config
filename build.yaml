@@ -13,5 +13,5 @@
 #
 ---
 include:
-  - board: [cornholius]
+  - board: cornholius
     snippet: studio-rpc-usb-uart
