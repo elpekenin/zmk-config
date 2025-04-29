@@ -60,10 +60,10 @@
     };
 
     tap_dances {
-        T_Z: z_lt_gt {
+        T_LT: lt_gt {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            bindings = <&kp Z>, <&kp ES_LT>, <&kp ES_GT>;
+            bindings = <&kp ES_LT>, <&kp ES_GT>;
         };
 
         T_ACT: acute_ntilde {
@@ -122,8 +122,8 @@
 
             bindings = <
                 &kp TAB       &kp Q         &kp W         &kp E         &kp R         &kp T         /**/     &kp Y         &kp U         &kp I         &kp O         &kp P         &M_BSP
-                &none         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
-                &kp LSHFT     &T_Z          &kp X         &kp C         &kp V         &kp B         /**/     &kp N         &kp M         &kp COMMA     &kp DOT       &kp ES_MINUS  &kp ES_GRAVE
+                &T_LT         &kp A         &kp S         &kp D         &kp F         &kp G         /**/     &kp H         &kp J         &kp K         &kp L         &T_ACT        &kp ES_PLUS
+                &kp LSHFT     &kp Z         &kp X         &kp C         &kp V         &kp B         /**/     &kp N         &kp M         &kp COMMA     &kp DOT       &kp ES_MINUS  &kp ES_GRAVE
                 &kp LCTRL     &kp LGUI      &kp LGUI      &kp LALT      &mo NAV       &T_SPC        /**/     &kp ENTER     &mo SYM       &kp RALT      &none         &none         &M_VOL
             >;
         };
