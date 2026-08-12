@@ -122,6 +122,10 @@
     bindings = <&led_soft_off>;
 };
 
+&gpiote {
+    status = "okay";
+};
+
 / {
     keymap {
         compatible = "zmk,keymap";
